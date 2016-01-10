@@ -1,0 +1,16 @@
+<html>
+<script>
+  function go(){
+    navigator.bluetooth.requestDevice({
+      filters: [{
+        services: ['heart_rate']
+      }]
+    }).then(device => console.log(device))
+
+  }
+</script>
+
+Test Web BlueTooth basics
+
+<input type="button" onclick="go();" value="go">
+</html>
