@@ -5,9 +5,13 @@
       filters: [{
         services: ['heart_rate']
       }]
-    }).then(device => console.log(device))
+    }).then(function(device){console.log(device)})
 
   }
+
+  window.addEventListener('load',function() {
+    document.querySelector("#go").addEventListener('click',go)
+  });
 </script>
 
 <style>
@@ -42,6 +46,6 @@
 Test Web BlueTooth basics
 
 <p>
-<div class="btn" onclick="go();" >GO</div>
+<div class="btn" id="go" >GO</div>
 </p>
 </html>
