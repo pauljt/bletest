@@ -8,7 +8,9 @@
     }).then(function (device) {
       console.log("Got BT Device:",device);
       alert(device)
-    })
+    }).catch(function(e){
+      alert(e.message)
+    });
 
   }
 
