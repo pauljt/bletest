@@ -1,16 +1,19 @@
 <html>
 <script>
-  function go(){
+  function go() {
     navigator.bluetooth.requestDevice({
       filters: [{
         services: ['heart_rate']
       }]
-    }).then(function(device){console.log(device);alert(JSON.stringify(device))})
+    }).then(function (device) {
+      console.log("Got BT Device:",device);
+      alert(JSON.stringify(device))
+    })
 
   }
 
-  window.addEventListener('load',function() {
-    document.querySelector("#go").addEventListener('click',go)
+  window.addEventListener('load', function () {
+    document.querySelector("#go").addEventListener('click', go)
   });
 </script>
 
@@ -46,6 +49,7 @@
 Test Web BlueTooth basics
 
 <p>
-<div class="btn" id="go" >GO</div>
+
+<div class="btn" id="go">GO</div>
 </p>
 </html>
