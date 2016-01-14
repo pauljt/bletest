@@ -1,12 +1,15 @@
 <html>
 <script>
   function go() {
-    navigator.bluetooth.requestDevice({
+
+    var filters= {
       filters: [{
         services: ['heart_rate']
       }]
-    }).then(function (device) {
-      console.log("Got BT Device:",device);
+    }
+
+    navigator.bluetooth.requestDevice({}).then(function (device) {
+      console.log("Got BT Device:",device.name);
       alert(device)
     }).catch(function(e){
       alert(e)
