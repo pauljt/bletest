@@ -10,7 +10,7 @@
 
     navigator.bluetooth.requestDevice({}).then(function (device) {
       console.log("Got BT Device:",device.name);
-      alert(device)
+      alert("Got BT Device:"+device.name)
     }).catch(function(e){
       alert(e)
     });
