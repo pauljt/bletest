@@ -2,16 +2,20 @@
 <script>
   function go() {
 
-    var filters= [{
-      services: ['heart_rate'],
-      name: "BB-7687",
-      namePrefix: "BB-"
-    }]
+    var options = {
+      filters: [{
+        services: ['heart_rate'],
+        name: "BB-7687",
+        namePrefix: "BB-"
+      }]
+    }
 
-    navigator.bluetooth.requestDevice(filters).then(function (device) {
-      console.log("Got BT Device:",device.name);
-      alert("Got BT Device:"+device.name)
-    }).catch(function(e){
+        []
+
+    navigator.bluetooth.requestDevice(options).then(function (device) {
+      console.log("Got BT Device:", device.name);
+      alert("Got BT Device:" + device.name)
+    }).catch(function (e) {
       alert(e)
     });
   }
