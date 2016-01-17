@@ -5,10 +5,12 @@
     var filters= {
       filters: [{
         services: ['heart_rate']
+        name: "BB-7687",
+        namePrefix: "BB-"
       }]
     }
 
-    navigator.bluetooth.requestDevice({}).then(function (device) {
+    navigator.bluetooth.requestDevice(filters).then(function (device) {
       console.log("Got BT Device:",device.name);
       alert("Got BT Device:"+device.name)
     }).catch(function(e){
