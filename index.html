@@ -1,29 +1,5 @@
 <html>
-<script>
-  function go() {
-
-    var options = {
-      filters: [{
-        services: ['22BB746F-2BA0-7554-2D6F-726568705327'],
-        name: "BB-7687",
-        namePrefix: "BB-"
-      }]
-    }
-
-    navigator.bluetooth.requestDevice(options).then(function (device) {
-      console.log("Got BT Device:", device.name);
-      alert("Got BT Device:" + device.name)
-    }).catch(function (e) {
-      console.log(e)
-      alert(e)
-    });
-  }
-
-  window.addEventListener('load', function () {
-    document.querySelector("#go").addEventListener('click', go)
-  });
-</script>
-
+<script src="index-compiled.js"></script>
 <style>
   .btn {
     background: #3498db;
