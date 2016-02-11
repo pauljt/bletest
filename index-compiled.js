@@ -2,7 +2,10 @@
 
 function go() {
   console.log('start');
+  console.log(window.webkit.messageHandlers.bluetooth.postMessage);
 
+  // NOTE: connected to services with IOS & BB8 requires upper-case UUIDS
+  // But the spec seems to require lower case?
   var BB8 = {
     name: "BB-7687",
     namePrefix: "BB-",
@@ -50,8 +53,9 @@ function go() {
   }).then(function (server) {
     return server.getPrimaryService(BB8.deviceService);
   }).then(function (service) {
-    chosenHeartRateService = service;
     return Promise.all([service.getCharacteristic(BB8.deviceCharModel).then(handleChar), service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
+  }).catch(function (e) {
+    console.log("Error:", e);
   });
 }
 
