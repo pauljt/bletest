@@ -49,8 +49,13 @@ function go() {
   };
 
   navigator.bluetooth.requestDevice(options)
-    .then(device => device.gatt.connect())
-    .then(server => server.getPrimaryService(BB8.deviceService))
+    .then(device => {
+      console.log("Device:",device);
+      return device.gatt.connect();
+    }).then(server => {
+      console.log("server:",server);
+      return server.getPrimaryService(BB8.deviceService)
+    })
     .then(service => {
       return Promise.all([
         service.getCharacteristic(BB8.deviceCharModel).then(handleChar),
