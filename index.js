@@ -49,7 +49,7 @@ function go() {
   };
 
   navigator.bluetooth.requestDevice(options)
-    .then(device => device.connectGATT())
+    .then(device => device.gatt.connect())
     .then(server => server.getPrimaryService(BB8.deviceService))
     .then(service => {
       return Promise.all([
