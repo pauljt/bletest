@@ -95,10 +95,10 @@ window.addEventListener('load', function () {
 });
 
 (function () {
-  var oldlog = console.log;
-  var logger = document.getElementById('console');
-  console.log = function (message) {
-    oldlog(message);
+  var exLog = console.log;
+  var logger = document.querySelector('#console');
+  console.log = function (msg) {
+    exLog.apply(this, arguments);
     if ((typeof message === "undefined" ? "undefined" : _typeof(message)) == 'object') {
       logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
     } else {
