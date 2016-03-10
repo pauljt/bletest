@@ -1,6 +1,5 @@
 function testBB8() {
   console.log('Starting BB8 test.')
-  console.log(window.webkit.messageHandlers.bluetooth.postMessage)
 
   // NOTE: connected to services with IOS & BB8 requires upper-case UUIDS
   // But the spec seems to require lower case?
@@ -105,8 +104,8 @@ window.addEventListener('load', function () {
 
 (function() {
   var exLog = console.log;
-  var logger = document.querySelector('#console');
-  console.log = function(msg) {
+  console.log = function(message) {
+    var logger = document.querySelector('#console');
     exLog.apply(this, arguments);
     if (typeof message == 'object') {
       logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
