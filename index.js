@@ -1,5 +1,3 @@
-
-
 function go() {
   console.log('start')
   console.log(window.webkit.messageHandlers.bluetooth.postMessage)
@@ -40,10 +38,10 @@ function go() {
     deviceCharFirm: "firmware_revision_string",
   };
 
+function testBB() {
 
 
-  /*
-  bb-8
+  // bb-8
   var options = {
 
     filters: [{
@@ -52,37 +50,59 @@ function go() {
       namePrefix: "BB-"
     }]
   };
-*/
-
-  var options = {
-    filters: [{
-      services: ['running_speed_and_cadence'],
-    }]
-  };
-
-
 
   navigator.bluetooth.requestDevice(options)
     .then(device => {
-      console.log("Device:",device);
+      console.log("Device:", device);
       return device.gatt.connect();
     }).then(server => {
-      console.log("server:",server);
+      console.log("server:", server);
       return server.getPrimaryService(BB8.deviceService)
     })
     .then(service => {
       return Promise.all([
         service.getCharacteristic(BB8.deviceCharModel).then(handleChar),
         service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
-    }).catch(function(e){
-      console.log("Error:",e);
+    }).catch(function (e) {
+    console.log("Error:", e);
+  });
+}
+
+  function testPedometer(){
+    var options = {
+      filters: [{
+        services: ['running_speed_and_cadence'],
+      }]
+    };
+    navigator.bluetooth.requestDevice(options)
+      .then(device => {
+        console.log("Device:", device);
+        return device.gatt.connect();
+      }).then(server => {
+        console.log("server:", server);
+        return server.getPrimaryService('running_speed_and_cadence')
+      })
+      .then(service => {
+        return Promise.all([
+          service.getCharacteristic('serial_number_string').then(handleChar),
+          service.getCharacteristic('rsc_feature').then(handleChar)]);
+          service.getCharacteristic('rsc_measurement').then(handleChar)]);
+          service.getCharacteristic('sensor_location').then(handleChar)]);
+      }).catch(function (e) {
+      console.log("Error:", e);
     });
+
+  }
+
+
+
+
 }
 
 function handleChar(characteristic) {
   characteristic.readValue()
     .then(data => {
-      alert("Got Char:"+data);
+      alert("Got Char:" + data);
     })
 }
 

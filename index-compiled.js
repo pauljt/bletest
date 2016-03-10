@@ -40,34 +40,49 @@ function go() {
     deviceCharFirm: "firmware_revision_string"
   };
 
-  /*
-  bb-8
-  var options = {
-     filters: [{
-      services: ['22BB746F-2BA0-7554-2D6F-726568705327'],
-      name: "BB-7687",
-      namePrefix: "BB-"
-    }]
-  };
-  */
+  function testBB() {
 
-  var options = {
-    filters: [{
-      services: ['running_speed_and_cadence']
-    }]
-  };
+    // bb-8
+    var options = {
 
-  navigator.bluetooth.requestDevice(options).then(function (device) {
-    console.log("Device:", device);
-    return device.gatt.connect();
-  }).then(function (server) {
-    console.log("server:", server);
-    return server.getPrimaryService(BB8.deviceService);
-  }).then(function (service) {
-    return Promise.all([service.getCharacteristic(BB8.deviceCharModel).then(handleChar), service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
-  }).catch(function (e) {
-    console.log("Error:", e);
-  });
+      filters: [{
+        services: ['22BB746F-2BA0-7554-2D6F-726568705327'],
+        name: "BB-7687",
+        namePrefix: "BB-"
+      }]
+    };
+
+    navigator.bluetooth.requestDevice(options).then(function (device) {
+      console.log("Device:", device);
+      return device.gatt.connect();
+    }).then(function (server) {
+      console.log("server:", server);
+      return server.getPrimaryService(BB8.deviceService);
+    }).then(function (service) {
+      return Promise.all([service.getCharacteristic(BB8.deviceCharModel).then(handleChar), service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
+    }).catch(function (e) {
+      console.log("Error:", e);
+    });
+  }
+
+  function testPedometer() {
+    var options = {
+      filters: [{
+        services: ['running_speed_and_cadence']
+      }]
+    };
+    navigator.bluetooth.requestDevice(options).then(function (device) {
+      console.log("Device:", device);
+      return device.gatt.connect();
+    }).then(function (server) {
+      console.log("server:", server);
+      return server.getPrimaryService('running_speed_and_cadence');
+    }).then(function (service) {
+      return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar)]);
+    }).catch(function (e) {
+      console.log("Error:", e);
+    });
+  }
 }
 
 function handleChar(characteristic) {
