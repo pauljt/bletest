@@ -64,6 +64,7 @@ function testBB8() {
 }
 
 function testPedometer() {
+  console.log('Starting Pedometer test.')
   var options = {
     filters: [{
       services: ['running_speed_and_cadence'],
