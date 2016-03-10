@@ -1,5 +1,7 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 function go() {
   console.log('start');
   console.log(window.webkit.messageHandlers.bluetooth.postMessage);
@@ -42,6 +44,7 @@ function go() {
 
   function testBB() {
 
+    console.log("Looking for BB-8.");
     // bb-8
     var options = {
 
@@ -78,7 +81,7 @@ function go() {
       console.log("server:", server);
       return server.getPrimaryService('running_speed_and_cadence');
     }).then(function (service) {
-      return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar)]);
+      return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar), service.getCharacteristic('rsc_measurement').then(handleChar), service.getCharacteristic('sensor_location').then(handleChar)]);
     }).catch(function (e) {
       console.log("Error:", e);
     });
@@ -94,5 +97,18 @@ function handleChar(characteristic) {
 window.addEventListener('load', function () {
   document.querySelector("#go").addEventListener('click', go);
 });
+
+(function () {
+  var old = console.log;
+  var logger = document.getElementById('console');
+  console.log = function (message) {
+    old.log(message);
+    if ((typeof message === "undefined" ? "undefined" : _typeof(message)) == 'object') {
+      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+    } else {
+      logger.innerHTML += message + '\n';
+    }
+  };
+})();
 
 //# sourceMappingURL=index-compiled.js.map

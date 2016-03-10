@@ -85,8 +85,8 @@ function testBB() {
       .then(service => {
         return Promise.all([
           service.getCharacteristic('serial_number_string').then(handleChar),
-          service.getCharacteristic('rsc_feature').then(handleChar)]);
-          service.getCharacteristic('rsc_measurement').then(handleChar)]);
+          service.getCharacteristic('rsc_feature').then(handleChar),
+          service.getCharacteristic('rsc_measurement').then(handleChar),
           service.getCharacteristic('sensor_location').then(handleChar)]);
       }).catch(function (e) {
       console.log("Error:", e);
