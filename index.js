@@ -40,13 +40,27 @@ function go() {
     deviceCharFirm: "firmware_revision_string",
   };
 
+
+
+  /*
+  bb-8
   var options = {
+
     filters: [{
       services: ['22BB746F-2BA0-7554-2D6F-726568705327'],
       name: "BB-7687",
       namePrefix: "BB-"
     }]
   };
+*/
+
+  var options = {
+    filters: [{
+      services: ['running_speed_and_cadence'],
+    }]
+  };
+
+
 
   navigator.bluetooth.requestDevice(options)
     .then(device => {
