@@ -42,7 +42,7 @@ function go() {
     deviceCharFirm: "firmware_revision_string"
   };
 
-  function testBB() {
+  function testBB8() {
 
     console.log("Looking for BB-8.");
     // bb-8
@@ -95,7 +95,8 @@ function handleChar(characteristic) {
 }
 
 window.addEventListener('load', function () {
-  document.querySelector("#go").addEventListener('click', go);
+  document.querySelector("#bb8").addEventListener('click', testBB8);
+  document.querySelector("#pedometer").addEventListener('click', testPedometer);
 });
 
 (function () {
