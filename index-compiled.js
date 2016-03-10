@@ -2,8 +2,8 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-function go() {
-  console.log('start');
+function testBB8() {
+  console.log('Starting BB8 test.');
   console.log(window.webkit.messageHandlers.bluetooth.postMessage);
 
   // NOTE: connected to services with IOS & BB8 requires upper-case UUIDS
@@ -42,50 +42,45 @@ function go() {
     deviceCharFirm: "firmware_revision_string"
   };
 
-  function testBB8() {
+  var options = {
 
-    console.log("Looking for BB-8.");
-    // bb-8
-    var options = {
+    filters: [{
+      services: ['22BB746F-2BA0-7554-2D6F-726568705327'],
+      name: "BB-7687",
+      namePrefix: "BB-"
+    }]
+  };
 
-      filters: [{
-        services: ['22BB746F-2BA0-7554-2D6F-726568705327'],
-        name: "BB-7687",
-        namePrefix: "BB-"
-      }]
-    };
+  navigator.bluetooth.requestDevice(options).then(function (device) {
+    console.log("Device:", device);
+    return device.gatt.connect();
+  }).then(function (server) {
+    console.log("server:", server);
+    return server.getPrimaryService(BB8.deviceService);
+  }).then(function (service) {
+    return Promise.all([service.getCharacteristic(BB8.deviceCharModel).then(handleChar), service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
+  }).catch(function (e) {
+    console.log("Error:", e);
+  });
+}
 
-    navigator.bluetooth.requestDevice(options).then(function (device) {
-      console.log("Device:", device);
-      return device.gatt.connect();
-    }).then(function (server) {
-      console.log("server:", server);
-      return server.getPrimaryService(BB8.deviceService);
-    }).then(function (service) {
-      return Promise.all([service.getCharacteristic(BB8.deviceCharModel).then(handleChar), service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
-    }).catch(function (e) {
-      console.log("Error:", e);
-    });
-  }
-
-  function testPedometer() {
-    var options = {
-      filters: [{
-        services: ['running_speed_and_cadence']
-      }]
-    };
-    navigator.bluetooth.requestDevice(options).then(function (device) {
-      console.log("Device:", device);
-      return device.gatt.connect();
-    }).then(function (server) {
-      console.log("server:", server);
-      return server.getPrimaryService('running_speed_and_cadence');
-    }).then(function (service) {
-      return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar), service.getCharacteristic('rsc_measurement').then(handleChar), service.getCharacteristic('sensor_location').then(handleChar)]);
-    }).catch(function (e) {
-      console.log("Error:", e);
-    });
-  }
+function testPedometer() {
+  var options = {
+    filters: [{
+      services: ['running_speed_and_cadence']
+    }]
+  };
+  navigator.bluetooth.requestDevice(options).then(function (device) {
+    console.log("Device:", device);
+    return device.gatt.connect();
+  }).then(function (server) {
+    console.log("server:", server);
+    return server.getPrimaryService('running_speed_and_cadence');
+  }).then(function (service) {
+    return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar), service.getCharacteristic('rsc_measurement').then(handleChar), service.getCharacteristic('sensor_location').then(handleChar)]);
+  }).catch(function (e) {
+    console.log("Error:", e);
+  });
 }
 
 function handleChar(characteristic) {
@@ -100,10 +95,10 @@ window.addEventListener('load', function () {
 });
 
 (function () {
-  var old = console.log;
+  var oldlog = console.log;
   var logger = document.getElementById('console');
   console.log = function (message) {
-    old.log(message);
+    oldlog(message);
     if ((typeof message === "undefined" ? "undefined" : _typeof(message)) == 'object') {
       logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
     } else {

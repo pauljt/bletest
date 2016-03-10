@@ -1,5 +1,5 @@
-function go() {
-  console.log('start')
+function testBB8() {
+  console.log('Starting BB8 test.')
   console.log(window.webkit.messageHandlers.bluetooth.postMessage)
 
   // NOTE: connected to services with IOS & BB8 requires upper-case UUIDS
@@ -38,10 +38,6 @@ function go() {
     deviceCharFirm: "firmware_revision_string",
   };
 
-function testBB8() {
-
-  console.log("Looking for BB-8.")
-  // bb-8
   var options = {
 
     filters: [{
@@ -68,31 +64,29 @@ function testBB8() {
   });
 }
 
-  function testPedometer(){
-    var options = {
-      filters: [{
-        services: ['running_speed_and_cadence'],
-      }]
-    };
-    navigator.bluetooth.requestDevice(options)
-      .then(device => {
-        console.log("Device:", device);
-        return device.gatt.connect();
-      }).then(server => {
-        console.log("server:", server);
-        return server.getPrimaryService('running_speed_and_cadence')
-      })
-      .then(service => {
-        return Promise.all([
-          service.getCharacteristic('serial_number_string').then(handleChar),
-          service.getCharacteristic('rsc_feature').then(handleChar),
-          service.getCharacteristic('rsc_measurement').then(handleChar),
-          service.getCharacteristic('sensor_location').then(handleChar)]);
-      }).catch(function (e) {
-      console.log("Error:", e);
-    });
-
-  }
+function testPedometer() {
+  var options = {
+    filters: [{
+      services: ['running_speed_and_cadence'],
+    }]
+  };
+  navigator.bluetooth.requestDevice(options)
+    .then(device => {
+      console.log("Device:", device);
+      return device.gatt.connect();
+    }).then(server => {
+      console.log("server:", server);
+      return server.getPrimaryService('running_speed_and_cadence')
+    })
+    .then(service => {
+      return Promise.all([
+        service.getCharacteristic('serial_number_string').then(handleChar),
+        service.getCharacteristic('rsc_feature').then(handleChar),
+        service.getCharacteristic('rsc_measurement').then(handleChar),
+        service.getCharacteristic('sensor_location').then(handleChar)]);
+    }).catch(function (e) {
+    console.log("Error:", e);
+  });
 }
 
 function handleChar(characteristic) {
@@ -109,10 +103,10 @@ window.addEventListener('load', function () {
 
 
 (function () {
-  var old = console.log;
+  var oldlog = console.log;
   var logger = document.getElementById('console');
   console.log = function (message) {
-    old.log(message);
+    oldlog(message);
     if (typeof message == 'object') {
       logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
     } else {
