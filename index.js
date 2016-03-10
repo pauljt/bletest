@@ -40,7 +40,7 @@ function go() {
 
 function testBB() {
 
-
+  console.log("Looking for BB-8.")
   // bb-8
   var options = {
 
@@ -93,10 +93,6 @@ function testBB() {
     });
 
   }
-
-
-
-
 }
 
 function handleChar(characteristic) {
@@ -109,3 +105,17 @@ function handleChar(characteristic) {
 window.addEventListener('load', function () {
   document.querySelector("#go").addEventListener('click', go)
 });
+
+
+(function () {
+  var old = console.log;
+  var logger = document.getElementById('console');
+  console.log = function (message) {
+    old.log(message);
+    if (typeof message == 'object') {
+      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+    } else {
+      logger.innerHTML += message + '\n';
+    }
+  }
+})();
