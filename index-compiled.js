@@ -1,7 +1,5 @@
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 function testBB8() {
   console.log('Starting BB8 test.');
 
@@ -94,17 +92,18 @@ window.addEventListener('load', function () {
   document.querySelector("#pedometer").addEventListener('click', testPedometer);
 });
 
-(function () {
+/*
+(function() {
   var exLog = console.log;
-  console.log = function (message) {
+  console.log = function(message) {
     var logger = document.querySelector('#console');
     exLog.apply(this, arguments);
-    if ((typeof message === "undefined" ? "undefined" : _typeof(message)) == 'object') {
+    if (typeof message == 'object') {
       logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
     } else {
       logger.innerHTML += message + '\n';
     }
-  };
-})();
+  }
+})()*/
 
 //# sourceMappingURL=index-compiled.js.map

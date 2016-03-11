@@ -102,7 +102,7 @@ window.addEventListener('load', function () {
 });
 
 
-
+/*
 (function() {
   var exLog = console.log;
   console.log = function(message) {
@@ -114,4 +114,4 @@ window.addEventListener('load', function () {
       logger.innerHTML += message + '\n';
     }
   }
-})()
+})()*/
