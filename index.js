@@ -107,7 +107,12 @@ window.addEventListener('load', function () {
 var log = function(message) {
   var logger = document.querySelector('#console');
   if (typeof message == 'object') {
-    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+    try {
+      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+    }
+    catch(e){
+      logger.innerHTML += message + '\n';
+    }
   } else {
     logger.innerHTML += message + '\n';
   }

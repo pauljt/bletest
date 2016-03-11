@@ -100,7 +100,11 @@ window.addEventListener('load', function () {
 var log = function log(message) {
   var logger = document.querySelector('#console');
   if ((typeof message === "undefined" ? "undefined" : _typeof(message)) == 'object') {
-    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+    try {
+      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+    } catch (e) {
+      logger.innerHTML += message + '\n';
+    }
   } else {
     logger.innerHTML += message + '\n';
   }
