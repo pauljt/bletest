@@ -48,10 +48,10 @@ function testBB8() {
 
   navigator.bluetooth.requestDevice(options)
     .then(device => {
-      log("Device:", device);
+      console.log("Device:", device);
       return device.gatt.connect();
     }).then(server => {
-      log("server:", server);
+      console.log("server:", server);
       return server.getPrimaryService(BB8.deviceService)
     })
     .then(service => {
@@ -59,7 +59,8 @@ function testBB8() {
         service.getCharacteristic(BB8.deviceCharModel).then(handleChar),
         service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
     }).catch(function (e) {
-    log("Error:", e);
+    console.log("Error:", e);
+    log(e.message)
   });
 }
 
@@ -104,7 +105,6 @@ window.addEventListener('load', function () {
 
 var log = function(message) {
   var logger = document.querySelector('#console');
-  console.log(arguments);
   if (typeof message == 'object') {
     logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
   } else {
