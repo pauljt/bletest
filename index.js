@@ -73,6 +73,7 @@ function testPedometer() {
   navigator.bluetooth.requestDevice(options)
     .then(device => {
       log("Device:", device);
+      log (device)
       return device.gatt.connect();
     }).then(server => {
       log("server:", server);
@@ -103,7 +104,7 @@ window.addEventListener('load', function () {
 
 var log = function(message) {
   var logger = document.querySelector('#console');
-  console.log(message);
+  console.log(arguments);
   if (typeof message == 'object') {
     logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
   } else {
