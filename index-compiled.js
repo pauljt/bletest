@@ -59,8 +59,8 @@ function testBB8() {
   }).then(function (service) {
     return Promise.all([service.getCharacteristic(BB8.deviceCharModel).then(handleChar), service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
   }).catch(function (e) {
-    console.log("Error:", e);
-    log(e.message);
+    console.log(e);
+    log(e);
   });
 }
 
@@ -81,7 +81,8 @@ function testPedometer() {
   }).then(function (service) {
     return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar), service.getCharacteristic('rsc_measurement').then(handleChar), service.getCharacteristic('sensor_location').then(handleChar)]);
   }).catch(function (e) {
-    log("Error:", e);
+    console.log(e);
+    log(e);
   });
 }
 

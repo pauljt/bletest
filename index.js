@@ -59,8 +59,8 @@ function testBB8() {
         service.getCharacteristic(BB8.deviceCharModel).then(handleChar),
         service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
     }).catch(function (e) {
-    console.log("Error:", e);
-    log(e.message)
+    console.log(e);
+    log(e)
   });
 }
 
@@ -87,7 +87,8 @@ function testPedometer() {
         service.getCharacteristic('rsc_measurement').then(handleChar),
         service.getCharacteristic('sensor_location').then(handleChar)]);
     }).catch(function (e) {
-    log("Error:", e);
+    console.log(e)
+    log(e);
   });
 }
 
