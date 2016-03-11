@@ -1,7 +1,9 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 function testBB8() {
-  console.log('Starting BB8 test.');
+  log('Starting BB8 test.');
 
   // NOTE: connected to services with IOS & BB8 requires upper-case UUIDS
   // But the spec seems to require lower case?
@@ -49,35 +51,35 @@ function testBB8() {
   };
 
   navigator.bluetooth.requestDevice(options).then(function (device) {
-    console.log("Device:", device);
+    log("Device:", device);
     return device.gatt.connect();
   }).then(function (server) {
-    console.log("server:", server);
+    log("server:", server);
     return server.getPrimaryService(BB8.deviceService);
   }).then(function (service) {
     return Promise.all([service.getCharacteristic(BB8.deviceCharModel).then(handleChar), service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
   }).catch(function (e) {
-    console.log("Error:", e);
+    log("Error:", e);
   });
 }
 
 function testPedometer() {
-  console.log('Starting Pedometer test.');
+  log('Starting Pedometer test.');
   var options = {
     filters: [{
       services: ['running_speed_and_cadence']
     }]
   };
   navigator.bluetooth.requestDevice(options).then(function (device) {
-    console.log("Device:", device);
+    log("Device:", device);
     return device.gatt.connect();
   }).then(function (server) {
-    console.log("server:", server);
+    log("server:", server);
     return server.getPrimaryService('running_speed_and_cadence');
   }).then(function (service) {
     return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar), service.getCharacteristic('rsc_measurement').then(handleChar), service.getCharacteristic('sensor_location').then(handleChar)]);
   }).catch(function (e) {
-    console.log("Error:", e);
+    log("Error:", e);
   });
 }
 
@@ -92,10 +94,20 @@ window.addEventListener('load', function () {
   document.querySelector("#pedometer").addEventListener('click', testPedometer);
 });
 
+var log = function log(message) {
+  var logger = document.querySelector('#console');
+  console.log(message);
+  if ((typeof message === "undefined" ? "undefined" : _typeof(message)) == 'object') {
+    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+  } else {
+    logger.innerHTML += message + '\n';
+  }
+};
+
 /*
 (function() {
-  var exLog = console.log;
-  console.log = function(message) {
+  var exLog = log;
+  log = function(message) {
     var logger = document.querySelector('#console');
     exLog.apply(this, arguments);
     if (typeof message == 'object') {

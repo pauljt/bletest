@@ -1,5 +1,5 @@
 function testBB8() {
-  console.log('Starting BB8 test.')
+  log('Starting BB8 test.')
 
   // NOTE: connected to services with IOS & BB8 requires upper-case UUIDS
   // But the spec seems to require lower case?
@@ -48,10 +48,10 @@ function testBB8() {
 
   navigator.bluetooth.requestDevice(options)
     .then(device => {
-      console.log("Device:", device);
+      log("Device:", device);
       return device.gatt.connect();
     }).then(server => {
-      console.log("server:", server);
+      log("server:", server);
       return server.getPrimaryService(BB8.deviceService)
     })
     .then(service => {
@@ -59,12 +59,12 @@ function testBB8() {
         service.getCharacteristic(BB8.deviceCharModel).then(handleChar),
         service.getCharacteristic(BB8.deviceCharManufacturer).then(handleChar)]);
     }).catch(function (e) {
-    console.log("Error:", e);
+    log("Error:", e);
   });
 }
 
 function testPedometer() {
-  console.log('Starting Pedometer test.')
+  log('Starting Pedometer test.')
   var options = {
     filters: [{
       services: ['running_speed_and_cadence'],
@@ -72,10 +72,10 @@ function testPedometer() {
   };
   navigator.bluetooth.requestDevice(options)
     .then(device => {
-      console.log("Device:", device);
+      log("Device:", device);
       return device.gatt.connect();
     }).then(server => {
-      console.log("server:", server);
+      log("server:", server);
       return server.getPrimaryService('running_speed_and_cadence')
     })
     .then(service => {
@@ -85,7 +85,7 @@ function testPedometer() {
         service.getCharacteristic('rsc_measurement').then(handleChar),
         service.getCharacteristic('sensor_location').then(handleChar)]);
     }).catch(function (e) {
-    console.log("Error:", e);
+    log("Error:", e);
   });
 }
 
@@ -101,11 +101,20 @@ window.addEventListener('load', function () {
   document.querySelector("#pedometer").addEventListener('click', testPedometer)
 });
 
+var log = function(message) {
+  var logger = document.querySelector('#console');
+  console.log(message);
+  if (typeof message == 'object') {
+    logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
+  } else {
+    logger.innerHTML += message + '\n';
+  }
+}
 
 /*
 (function() {
-  var exLog = console.log;
-  console.log = function(message) {
+  var exLog = log;
+  log = function(message) {
     var logger = document.querySelector('#console');
     exLog.apply(this, arguments);
     if (typeof message == 'object') {
