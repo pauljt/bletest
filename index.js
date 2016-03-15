@@ -49,9 +49,11 @@ function testBB8() {
   navigator.bluetooth.requestDevice(options)
     .then(device => {
       console.log("Device:", device);
+      log("Device:"+device)
       return device.gatt.connect();
     }).then(server => {
       console.log("server:", server);
+      console.log("server:"+ server);
       return server.getPrimaryService(BB8.deviceService)
     })
     .then(service => {
