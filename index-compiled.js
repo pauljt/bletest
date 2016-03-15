@@ -72,13 +72,13 @@ function testPedometer() {
     }]
   };
   navigator.bluetooth.requestDevice(options).then(function (device) {
-    log("Device:", device);
-    log(device);
+    log("Device:" + device);
     return device.gatt.connect();
   }).then(function (server) {
-    log("server:", server);
+    log("server:" + server);
     return server.getPrimaryService('running_speed_and_cadence');
   }).then(function (service) {
+    log("Got Service" + service);
     return Promise.all([service.getCharacteristic('serial_number_string').then(handleChar), service.getCharacteristic('rsc_feature').then(handleChar), service.getCharacteristic('rsc_measurement').then(handleChar), service.getCharacteristic('sensor_location').then(handleChar)]);
   }).catch(function (e) {
     console.log(e);
@@ -109,19 +109,5 @@ var log = function log(message) {
     logger.innerHTML += message + '\n';
   }
 };
-
-/*
-(function() {
-  var exLog = log;
-  log = function(message) {
-    var logger = document.querySelector('#console');
-    exLog.apply(this, arguments);
-    if (typeof message == 'object') {
-      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '\n';
-    } else {
-      logger.innerHTML += message + '\n';
-    }
-  }
-})()*/
 
 //# sourceMappingURL=index-compiled.js.map
