@@ -73,6 +73,7 @@ function testPedometer() {
   };
   navigator.bluetooth.requestDevice(options).then(function (device) {
     log("Device:" + device);
+    console.log("device", device);
     return device.gatt.connect();
   }).then(function (server) {
     log("server:" + server);
