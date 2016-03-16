@@ -92,7 +92,7 @@ function testPedometer() {
 function handleChar(characteristic) {
   console.log('handleChar():' + characteristic.uuid);
   characteristic.readValue().then(function (data) {
-    alert("Char " + characteristic.uuid + " is " + ab2str(data));
+    alert("Char " + characteristic.uuid + " is " + data.getUTF8String());
   });
 }
 
@@ -100,10 +100,6 @@ window.addEventListener('load', function () {
   document.querySelector("#bb8").addEventListener('click', testBB8);
   document.querySelector("#pedometer").addEventListener('click', testPedometer);
 });
-
-function ab2str(buf) {
-  return String.fromCharCode.apply(null, new Uint16Array(buf));
-}
 
 var log = function log(message) {
   var logger = document.querySelector('#console');
@@ -116,6 +112,16 @@ var log = function log(message) {
   } else {
     logger.innerHTML += message + '\n';
   }
+};
+
+// http://stackoverflow.com/questions/8153725/how-to-use-strings-with-javascript-typed-arrays
+DataView.prototype.getUTF8String = function (offset, length) {
+  var utf16 = new ArrayBuffer(length * 2);
+  var utf16View = new Uint16Array(utf16);
+  for (var i = 0; i < length; ++i) {
+    utf16View[i] = this.getUint8(offset + i);
+  }
+  return String.fromCharCode.apply(null, utf16View);
 };
 
 //# sourceMappingURL=index-compiled.js.map
