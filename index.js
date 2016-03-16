@@ -96,6 +96,7 @@ function testPedometer() {
 }
 
 function handleChar(characteristic) {
+  console.log('handleChar():'+characteristic.uuid)
   characteristic.readValue()
     .then(data => {
       alert("Got Char:" + data);
