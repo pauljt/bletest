@@ -99,7 +99,7 @@ function handleChar(characteristic) {
   console.log('handleChar():'+characteristic.uuid)
   characteristic.readValue()
     .then(data => {
-      alert("Got Char:" + data);
+      alert("Char "+characteristic.uuid +" is " + ab2str(data));
     })
 }
 
@@ -107,6 +107,10 @@ window.addEventListener('load', function () {
   document.querySelector("#bb8").addEventListener('click', testBB8)
   document.querySelector("#pedometer").addEventListener('click', testPedometer)
 });
+
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint16Array(buf));
+}
 
 var log = function(message) {
   var logger = document.querySelector('#console');
